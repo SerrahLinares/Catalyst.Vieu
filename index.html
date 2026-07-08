@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalyst 26 — CEO Briefing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #333333;
+    --ink-light: #666666;
+    --ink-muted: #999999;
+    --pearl: #EEEEEE;
+    --pearl-dark: #E4E4E4;
+    --white: #FFFFFF;
+    --accent: #7744FF;
+    --accent-tint: rgba(119,68,255,0.07);
+    --accent-tint-mid: rgba(119,68,255,0.12);
+    --green: #00EC8A;
+    --radius: 15px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  body {
+    font-family: 'Share', Georgia, serif;
+    background: var(--pearl);
+    background-image:
+      radial-gradient(ellipse 700px 500px at 90% 10%, rgba(119,68,255,0.10) 0%, transparent 70%),
+      radial-gradient(circle 2px at 20px 20px, rgba(119,68,255,0.08) 0%, transparent 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 48px 24px 64px;
+  }
+
+  /* Dot grid texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(119,68,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+
+  /* ── Header ── */
+  .header {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-radius: var(--radius);
+    padding: 40px 44px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 340px; height: 220px;
+    background: radial-gradient(ellipse at top right, rgba(119,68,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .header .sub {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+  .header .meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-light);
+    background: var(--pearl);
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--pearl-dark);
+  }
+  .meta-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── TL;DR ── */
+  .tldr {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .tldr-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .tldr p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.75;
+  }
+  .tldr strong { color: var(--ink); font-weight: 700; }
+  .tldr a { color: var(--accent); text-decoration: underline; }
+
+  /* ── Section title ── */
+  .section { margin-bottom: 24px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(119,68,255,0.2);
+  }
+
+  /* ── Stat Cards ── */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .card p { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
+  .card .stat {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* ── Flow ── */
+  .flow {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .flow-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .flow-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+  }
+  .flow-bubble {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--accent-tint);
+    border: 1.5px solid rgba(119,68,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    margin: 0 auto 10px;
+  }
+  .flow-title { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .flow-desc { font-size: 11px; color: var(--ink-muted); line-height: 1.5; }
+  .flow-arrow {
+    flex-shrink: 0;
+    align-self: center;
+    color: rgba(119,68,255,0.35);
+    font-size: 18px;
+    margin-top: -20px;
+  }
+
+  /* ── Who / Connections grid ── */
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .who-card {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+  .who-card .name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .who-card .role {
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .who-card .desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.65;
+  }
+  .who-card .tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--accent-tint);
+    color: var(--accent);
+    border: 1px solid rgba(119,68,255,0.2);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Session card ── */
+  .session-card {
+    background: var(--accent-tint);
+    border: 1.5px solid rgba(119,68,255,0.2);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+  .session-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .session-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .session-body {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+  .session-body p { margin-bottom: 10px; }
+  .session-body p:last-child { margin-bottom: 0; }
+
+  /* ── Opportunity table ── */
+  .opp-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .opp-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 10px 14px;
+    background: var(--accent-tint);
+    border-bottom: 1.5px solid rgba(119,68,255,0.15);
+  }
+  .opp-table th:first-child { border-radius: 10px 0 0 0; }
+  .opp-table th:last-child { border-radius: 0 10px 0 0; }
+  .opp-table td {
+    padding: 14px;
+    font-size: 13px;
+    color: var(--ink-light);
+    border-bottom: 1px solid var(--pearl);
+    background: var(--white);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .opp-table tr:last-child td { border-bottom: none; }
+  .opp-table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+  .opp-table tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+  .opp-table td:first-child {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    width: 36px;
+    text-align: center;
+  }
+  .opp-table td:nth-child(2) { font-weight: 700; color: var(--ink); font-size: 13px; }
+
+  /* ── Revenue path ── */
+  .rev-path {
+    background: var(--white);
+    border: 1px solid var(--white);
+    border-left: 4px solid var(--green);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .rev-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: #00a862;
+    margin-bottom: 16px;
+  }
+  .rev-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .rev-item:last-child { margin-bottom: 0; }
+  .rev-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(0,236,138,0.12);
+    border: 1.5px solid rgba(0,236,138,0.4);
+    color: #00a862;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rev-item p { font-size: 14px; color: var(--ink-light); line-height: 1.7; }
+  .rev-item strong { color: var(--ink); font-weight: 700; }
+
+  /* ── Company pills ── */
+  .companies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .company-pill {
+    padding: 5px 14px;
+    background: var(--white);
+    border: 1px solid var(--pearl-dark);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 400;
+  }
+  .company-pill.highlight {
+    background: var(--accent-tint);
+    border-color: rgba(119,68,255,0.25);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── Footer ── */
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-muted);
+    padding-top: 20px;
+    border-top: 1px solid var(--pearl-dark);
+    margin-top: 8px;
+  }
+  .vieu-mark {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: lowercase;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">CEO Briefing · Confidential · July 2026</div>
+    <h1>Catalyst 26 — Why This Month Matters for Vieu</h1>
+    <p class="sub">Partnership Leaders' flagship conference, NYC, August 25–26. Serrah is a confirmed Power Circle host. Here's why you should care and what we can do about it in the next 46 days.</p>
+    <div class="meta">
+      <div class="meta-item"><div class="meta-dot"></div> 1,000+ partnership &amp; ecosystem leaders</div>
+      <div class="meta-item"><div class="meta-dot"></div> AWS, OpenAI, SAP CPO, Microsoft confirmed</div>
+      <div class="meta-item"><div class="meta-dot"></div> Serrah has full pre-event attendee list access</div>
+      <div class="meta-item"><div class="meta-dot"></div> PL founders Chris &amp; Asher in our Vieu graph</div>
+    </div>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-label">TL;DR — Why This Is Worth Your Time</div>
+    <p>Serrah has been invited to host a Power Circle at the largest partnerships conference in the US. The event has confirmed the <strong>SAP CPO flying in from Germany</strong> and <strong>OpenAI's full partner team</strong>. The real unlock: the co-founders of Partnership Leaders — already in our Vieu graph — have offered to personally introduce Serrah to <strong>anyone attending the event</strong>. See the full attending company list <a href="https://www.joincatalyst.com/attending-companies" target="_blank">here</a>. This isn't a conference appearance — it's a <strong>structured pipeline event</strong> if we treat it that way for the next 46 days.</p>
+  </div>
+
+  <!-- What is this event -->
+  <div class="section">
+    <div class="section-title">What is Partnership Leaders / Catalyst</div>
+    <div class="cards">
+      <div class="card">
+        <div class="stat">1,000+</div>
+        <h3>Attendees</h3>
+        <p>CROs, CPOs, VP Partnerships, Alliance leaders, and ecosystem executives from the world's top tech and AI-native companies.</p>
+      </div>
+      <div class="card">
+        <div class="stat">5th</div>
+        <h3>Year Running</h3>
+        <p>Partnership Leaders is the global community for the partnerships profession. Catalyst is their flagship annual conference — the Dreamforce equivalent for partner leaders.</p>
+      </div>
+      <div class="card">
+        <div class="stat">7</div>
+        <h3>Content Tracks</h3>
+        <p>Including AI in Partnerships, Ecosystems Strategy, and Solution Partnerships — all core Vieu buying contexts.</p>
+      </div>
+      <div class="card">
+        <div class="stat">Aug 25</div>
+        <h3>NYC · Brooklyn Bridge Marriott</h3>
+        <p>Two days. Power Circles, main stage keynotes, executive roundtables. AWS is a named sponsor. OpenAI partner team confirmed this week.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connections -->
+  <div class="section">
+    <div class="section-title">Connections — Who We Now Have Access To</div>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="name">Chris Samila</div>
+        <div class="role">Co-Founder, Partnership Leaders</div>
+        <div class="desc">Runs the organization and the Catalyst event. Personally invited Serrah to host a Power Circle. Has offered warm introductions to anyone at the event — including SAP CPO and OpenAI partner team.</div>
+        <span class="tag">In Vieu Graph</span>
+      </div>
+      <div class="who-card">
+        <div class="name">Asher (Mathew)</div>
+        <div class="role">Co-Founder, Partnership Leaders</div>
+        <div class="desc">Introduced Serrah to Chris. Long-standing relationship. Serrah has appeared on the Unlearn podcast with him. Entry point to the PL community at the highest level.</div>
+        <span class="tag">In Vieu Graph</span>
+      </div>
+      <div class="who-card">
+        <div class="name">Zachary Foote</div>
+        <div class="role">Account Manager, Partnership Leaders</div>
+        <div class="desc">Managing the AWS relationship for Catalyst and working to bring AI-native companies from the AWS partner network to the event. Has shared the full target company list and is aligned on joint outreach with Serrah. Key bridge to the AWS Marketplace COE team.</div>
+        <span class="tag">Active Collaboration</span>
+      </div>
+      <div class="who-card">
+        <div class="name">Arif Fazvi &amp; Mike Levy</div>
+        <div class="role">AWS Marketplace COE</div>
+        <div class="desc">Zach can intro us to this team. They're running the AgentCore ISV Acceleration program — directly relevant to Vieu's positioning. In return, they'd benefit from connecting with the BOX and GSP teams (know Amanda, aware of Jeff Grimes) whose partners will be at Catalyst. AWS is a sponsor — an opportunity to engage their broader team around training, networking, or education at the event.</div>
+        <span class="tag">Warm Intro via Zach</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Serrah's session -->
+  <div class="section">
+    <div class="section-title">Serrah's Power Circle — What It Is</div>
+    <div class="flow">
+      <p style="font-size:13px; color:#666; margin-bottom:18px;">A Power Circle is a facilitated 45-minute small group discussion (8–10 people, no screen, not recorded). Serrah's session is confirmed on the published agenda.</p>
+      <div class="session-card">
+        <div class="session-eyebrow">Live on Catalyst Agenda · Power Circle Zone B · 11:00–11:45 AM EDT</div>
+        <div class="session-title">The Access Problem Nobody in the AWS Ecosystem Talks About</div>
+        <div class="session-body">
+          <p>Every serious AWS partner has the joint value prop, the co-sell playbook, and the pitch deck. And then spends six months trying to get 30 minutes with the CFO or CIO.</p>
+          <p>The bottleneck isn't the solution — it's access. Specifically, warm and credible access to the economic buyer before a competing partner or direct seller gets there first.</p>
+          <p>This Power Circle examines the part of the co-sell motion most partnership leaders don't talk about publicly: partners aren't fully aligned, nobody is sharing their best executive relationships, and the real competition inside the AWS ecosystem is who gets to the economic buyer first.</p>
+          <p>We'll spend 45 minutes on how the access problem is being solved right now, what the AWS Business Outcomes Xcelerator program is building to create joint executive-level engagement infrastructure, and what a commercial motion looks like when it's designed to win the access race. Come ready to be honest about the gap between your co-sell narrative and your co-sell numbers.</p>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-step">
+          <div class="flow-bubble">&#9679;</div>
+          <div class="flow-title">Session fills</div>
+          <div class="flow-desc">Attendees self-select. These are buyers who feel this problem acutely.</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step">
+          <div class="flow-bubble">&#9679;</div>
+          <div class="flow-title">45 min discussion</div>
+          <div class="flow-desc">Serrah facilitates. Real problems shared. She's the authority in the room.</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step">
+          <div class="flow-bubble">&#9679;</div>
+          <div class="flow-title">Pre-event prep</div>
+          <div class="flow-desc">Serrah has attendee list in advance. Can research + prioritize who to invite.</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step">
+          <div class="flow-bubble">&#9679;</div>
+          <div class="flow-title">Pipeline</div>
+          <div class="flow-desc">Warm follow-up post-event. Problem already acknowledged in the room.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI-native companies -->
+  <div class="section">
+    <div class="section-title">AI-Native Companies Zach Wants at the Event — Several Are Vieu Customers</div>
+    <div class="companies">
+      <div class="company-pill highlight">Cognition</div>
+      <div class="company-pill highlight">ElevenLabs</div>
+      <div class="company-pill highlight">Sierra</div>
+      <div class="company-pill">Perplexity</div>
+      <div class="company-pill">Synthesia</div>
+      <div class="company-pill">xAI</div>
+      <div class="company-pill">Cohere</div>
+      <div class="company-pill">Decagon</div>
+      <div class="company-pill">Midjourney</div>
+      <div class="company-pill">Suno</div>
+      <div class="company-pill">Together AI</div>
+      <div class="company-pill">World Labs</div>
+      <div class="company-pill">Runway</div>
+      <div class="company-pill">OpenEvidence</div>
+      <div class="company-pill">Abridge</div>
+      <div class="company-pill">Mercor</div>
+      <div class="company-pill">Legora</div>
+      <div class="company-pill">Genspark.ai</div>
+      <div class="company-pill">Cyera</div>
+    </div>
+    <p style="font-size:12px; color:#999; margin-top:4px;">Highlighted = confirmed or likely Vieu customer overlap via AWS BOX/GSP programs. Serrah has delivered enriched contact list with partner strategies to Zach.</p>
+  </div>
+
+  <!-- Strategic angles -->
+  <div class="section">
+    <div class="section-title">4 Strategic Angles — Ranked by Revenue Potential</div>
+    <table class="opp-table">
+      <tr>
+        <th>#</th>
+        <th>Opportunity</th>
+        <th>What It Is</th>
+        <th>Potential Outcome</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Power Circle → Direct Pipeline</td>
+        <td>8–10 partnership leaders in the room who self-selected because this is their problem. Serrah has 45 min as the authority facilitating the conversation.</td>
+        <td>3–5 warm follow-up conversations with ICP buyers. Highest conversion path at any conference.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Partnership Leaders as Customer</td>
+        <td>Chris and Asher are now in our graph. They run a global community of 10,000+ partnership professionals and are actively trying to understand AI-native company needs. Vieu is exactly the tool that helps them do that.</td>
+        <td>Pilot or partnership with PL — gives us brand credibility and a distribution channel inside the partnerships community.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>AWS Agentic Showcase Collaboration</td>
+        <td>Zach is working with AWS on an agentic build show floor. Companies being showcased are AWS partners at various stages of leveraging AWS programs like BOX and GSP — the same ecosystem Vieu operates in. Vieu can be the GTM layer that demonstrates how these companies win co-sell.</td>
+        <td>Deeper AWS integration. Could unlock budget pathway and expand the BOX/GSP program relationship beyond current scope.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Chris's Warm Intro Network</td>
+        <td>Chris told Serrah he will personally intro her to anyone at the event. SAP CPO (flying from Germany) and OpenAI partner team confirmed. Both are ICP for Vieu.</td>
+        <td>Direct access to enterprise and AI-native buyer relationships that would take months to build through cold outreach.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Revenue paths -->
+  <div class="rev-path">
+    <div class="rev-label">How This Makes Vieu Money</div>
+    <div class="rev-item">
+      <div class="rev-num">1</div>
+      <p><strong>Direct enterprise deals:</strong> Partnership leaders at the session are budget holders or strong influencers at companies like SAP, OpenAI, and AWS. One closed deal from this event covers the entire cost multiple times over.</p>
+    </div>
+    <div class="rev-item">
+      <div class="rev-num">2</div>
+      <p><strong>Distribution via Partnership Leaders:</strong> If PL becomes a customer or partner, their 10,000-member community becomes a warm referral channel for Vieu — every future Catalyst event, every summit, every newsletter.</p>
+    </div>
+    <div class="rev-item">
+      <div class="rev-num">3</div>
+      <p><strong>AWS BOX program expansion:</strong> Demonstrating Vieu's value to AWS's own team (not just their partners) is the unlock for Vieu becoming an internal AWS tool — a completely different revenue tier than the current program structure.</p>
+    </div>
+    <div class="rev-item">
+      <div class="rev-num">4</div>
+      <p><strong>AI-native company pipeline:</strong> The 19 target companies Zach shared are exactly Vieu's ICP. Several are already warm through AWS. Getting them to Catalyst — with Serrah as the connective tissue — creates a concentrated buyer cohort in one room.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span class="vieu-mark">vieu</span> &nbsp;·&nbsp; Built from Avoma call transcripts (Serrah × Chris Samila, Serrah × Zachary Foote) + AWS BOX check-in notes &nbsp;·&nbsp; July 8, 2026
+  </div>
+
+</div>
+</body>
+</html>
